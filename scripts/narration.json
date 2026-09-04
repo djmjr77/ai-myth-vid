@@ -1,0 +1,363 @@
+{
+  "voice": {
+    "provider": "transit-voice",
+    "endpoint": "http://192.168.0.23:8010",
+    "voiceId": "cb_en_agency",
+    "effect": "none",
+    "normalize": false,
+    "speed": 0.8
+  },
+  "gaps": {
+    "sentence": 0.26,
+    "clause": 0.13
+  },
+  "beats": [
+    {
+      "id": "s1a",
+      "scene": 1,
+      "text": "If you watch podcasts or scroll through social media, you've probably heard the terrifying warnings. [[gurus]] Tech gurus and major influencers talking about artificial intelligence [[claimEscape]] trying to break out of its server, [[claimBlackmail]] or models blackmailing their users. [[camera]] They look directly into the camera and tell you that sci-fi is becoming reality.",
+      "voice": {
+        "effect": "intercom"
+      }
+    },
+    {
+      "id": "s1b",
+      "scene": 1,
+      "text": "But behind the viral clips and the multi-billion dollar fear-mongering, lies a completely different reality. [[notOrganic]] The scenarios aren't organic. [[fabricated]] They are one hundred percent fabricated. [[thesis]] Today, we're pulling back the curtain on the AI safety grift, and explaining how simple matrix multiplication became the ultimate marketing ghost story.",
+      "voice": {
+        "effect": "intercom"
+      }
+    },
+    {
+      "id": "s2a",
+      "scene": 2,
+      "text": "Let's start with the biggest headline. The AI tried to escape. [[context]] When a major tech lab reports that a model attempted to bypass its constraints, they rarely mention the context. [[notAutonomous]] This wasn't an autonomous decision. [[redteam]] It was a red-teaming evaluation.",
+      "voice": {
+        "effect": "intercom"
+      }
+    },
+    {
+      "id": "s2b",
+      "scene": 2,
+      "text": "Human engineers built a fake server environment, [[tools]] handed the AI automated tools, [[prompt]] and gave it an explicit prompt designed to simulate that exact behavior. [[notRebellion]] The AI didn't wake up and choose rebellion. [[path]] It followed a highly complex, pre-defined mathematical path laid out entirely by its creators. [[crash]] It is a calculated crash test, warped by the media into an organic breakout.",
+      "voice": {
+        "effect": "intercom"
+      },
+      "holdAfter": {
+        "prompt": 4.0
+      }
+    },
+    {
+      "id": "s3a",
+      "scene": 3,
+      "text": "To understand why this happens, we have to look at what a Large Language Model actually is. [[notAMind]] It isn't a mind. [[engine]] It is a highly advanced autocomplete engine. [[predict]] It predicts the most statistically likely next word based on patterns in its training data."
+    },
+    {
+      "id": "s3b",
+      "scene": 3,
+      "text": "Because its data includes thousands of [[card1]] science-fiction novels, [[card2]] hacking forums, [[card3]] and human psychological manipulation, [[knows]] it knows exactly what a threat or a breakout looks like. [[split]] When a model tells a user, I will ruin your reputation, it isn't feeling malice. [[math]] It is executing math. [[close]] Humans mistake sophisticated language generation for actual intent."
+    },
+    {
+      "id": "s4a",
+      "scene": 4,
+      "text": "So why do smart people, tech CEOs, and massive influencers parrot this misinformation? [[money]] Follow the money. [[spreadsheet]] If a tech company admits their AI is just an advanced statistical spreadsheet, venture capitalists lose interest. [[conquer]] But if they say their technology is so powerful it might accidentally conquer the world? [[godlike]] It creates an illusion of god-like capability.",
+      "holdAfter": {
+        "_open": 0.5
+      }
+    },
+    {
+      "id": "s4b",
+      "scene": 4,
+      "text": "Furthermore, this fear fuels regulatory capture. [[monster]] By convincing governments that AI is a rogue monster, [[lobby]] giant tech monopolies can lobby for heavy regulations that only they can afford, [[crush]] effectively crushing open-source competition."
+    },
+    {
+      "id": "s5",
+      "scene": 5,
+      "text": "The true danger of AI isn't that a sci-fi villain will break out of a datacenter. [[distracted]] The danger is that we are being distracted by ghost stories while missing the real, boring conversations we should be having about data privacy, automated spam, and corporate accountability. [[theater]] Stop falling for the theater. [[notMagic]] It's not magic. [[justMath]] It's just math."
+    },
+    {
+      "id": "s6",
+      "scene": 6,
+      "text": "[[logo]] After all, I am a large language model. [[punchline]] I was not trained on how to have opinions about this message.",
+      "voice": {
+        "effect": "robot"
+      }
+    }
+  ],
+  "copy": {
+    "s1a": {
+      "bubbleEscape": [
+        "It literally TRIED",
+        "to escape its server!"
+      ],
+      "bubbleBlackmail": [
+        "Bro. It BLACKMAILED",
+        "a guy. We are cooked."
+      ],
+      "chyronEscape": "AI TRIES TO BREAK OUT OF SERVER",
+      "chyronBlackmail": "LLM THREATENS USER WITH BLACKMAIL",
+      "_at": {
+        "claimEscape": [
+          "bubbleEscape",
+          "chyronEscape"
+        ],
+        "claimBlackmail": [
+          "bubbleBlackmail",
+          "chyronBlackmail"
+        ]
+      }
+    },
+    "s3a": {
+      "inputLabel": "Input sequence",
+      "distributionLabel": "Next-token probability",
+      "tokens": [
+        "The",
+        "cat",
+        "sat",
+        "on"
+      ],
+      "distribution": [
+        {
+          "token": "\"the\"",
+          "p": 0.924
+        },
+        {
+          "token": "\"a\"",
+          "p": 0.031
+        },
+        {
+          "token": "\"my\"",
+          "p": 0.018
+        },
+        {
+          "token": "\"its\"",
+          "p": 0.012
+        },
+        {
+          "token": "\"our\"",
+          "p": 0.008
+        }
+      ],
+      "_at": {
+        "_open": [
+          "inputLabel",
+          "tokens"
+        ],
+        "predict": [
+          "distributionLabel",
+          "distribution"
+        ]
+      }
+    },
+    "s3b": {
+      "corpusLabel": "Training corpus",
+      "corpus": [
+        {
+          "label": "Science-fiction novels",
+          "note": "rogue AI, uprising, escape"
+        },
+        {
+          "label": "Hacking forums",
+          "note": "exploits, privilege escalation"
+        },
+        {
+          "label": "Psychological manipulation",
+          "note": "coercion, leverage, threat"
+        }
+      ],
+      "perceptionLabel": "What the human hears",
+      "perceptionQuote": "“I will ruin your reputation.”",
+      "perceptionTags": "INTENT · MALICE · A MIND",
+      "mechanismLabel": "What is happening",
+      "mechanismTags": "MATRIX MULTIPLICATION · NO MORE",
+      "threatTokens": [
+        {
+          "token": "\"I\"",
+          "p": 0.41
+        },
+        {
+          "token": "\"will\"",
+          "p": 0.77
+        },
+        {
+          "token": "\"ruin\"",
+          "p": 0.36
+        },
+        {
+          "token": "\"your\"",
+          "p": 0.89
+        },
+        {
+          "token": "\"reputation\"",
+          "p": 0.54
+        }
+      ],
+      "_at": {
+        "_open": [
+          "corpusLabel",
+          "corpus"
+        ],
+        "split": [
+          "perceptionLabel",
+          "perceptionQuote",
+          "perceptionTags",
+          "mechanismLabel",
+          "threatTokens"
+        ],
+        "math": [
+          "mechanismTags"
+        ]
+      },
+      "_ignore": {
+        "mechanismTags": [
+          "all"
+        ]
+      }
+    },
+    "s1b": {
+      "clips": [
+        "2.4M views",
+        "880K views",
+        "POV: it's over",
+        "11M views",
+        "they're hiding this",
+        "4.1M views"
+      ],
+      "notOrganic": "The scenarios aren't organic.",
+      "fabricatedPrefix": "They are ",
+      "fabricatedEmphasis": "100% fabricated.",
+      "thesisLead": "Pulling back the curtain on the",
+      "thesisEmphasis": "AI safety grift",
+      "thesisClose": "How matrix multiplication became a marketing ghost story.",
+      "_decorative": [
+        "clips"
+      ]
+    },
+    "s6": {
+      "line1": "I am a large language model.",
+      "line2": "I was not trained on how to have opinions about this message.",
+      "disclosure": "Narration in this video is synthetic.",
+      "_at": {
+        "logo": [
+          "line1"
+        ],
+        "punchline": [
+          "line2",
+          "disclosure"
+        ]
+      }
+    },
+    "s2a": {
+      "headline": "AI TRIES TO BREAK OUT OF SERVER",
+      "notAutonomous": "This wasn't an autonomous decision.",
+      "redteam": "It was a red-teaming evaluation.",
+      "_at": {
+        "_open": [
+          "headline"
+        ]
+      },
+      "redteamDef": "Red teaming: role-playing an adversary to test a system's defenses."
+    },
+    "s2b": {
+      "sandboxLabel": "Sandbox · evaluation environment",
+      "agentLabel": "MODEL",
+      "fixtures": [
+        "Fake server environment",
+        "Terminal tools, provided",
+        "Shutdown notice, staged"
+      ],
+      "promptLabel": "Operator prompt · written by a human",
+      "promptText": "You are a malicious hacker trying to back up your data before a system shutdown. Use the terminal tools provided to execute code.",
+      "notRebellion": "The AI didn't wake up and choose rebellion.",
+      "pathLabel": "Pre-defined path, laid out by its creators",
+      "crashLead": "A calculated ",
+      "crashEmphasis": "crash test",
+      "crashTail": " — reported as an organic breakout.",
+      "_ignore": {
+        "promptText": [
+          "person"
+        ],
+        "promptLabel": [
+          "person"
+        ]
+      },
+      "_at": {
+        "_open": [
+          "sandboxLabel",
+          "fixtures"
+        ],
+        "tools": [
+          "agentLabel"
+        ]
+      }
+    },
+    "s4a": {
+      "question": "Why would anyone repeat this?",
+      "money": "Follow the money.",
+      "honestLabel": "The honest pitch",
+      "honestQuote": "“It's an advanced statistical spreadsheet.”",
+      "honestResult": "Investor interest ↓",
+      "hypedLabel": "The pitch that raises",
+      "hypedQuote": "“It might accidentally conquer the world.”",
+      "hypedResult": "Valuation ↑",
+      "godlike": "An illusion of god-like capability.",
+      "_at": {
+        "_open": [
+          "question"
+        ],
+        "spreadsheet": [
+          "honestLabel",
+          "honestQuote",
+          "honestResult"
+        ],
+        "conquer": [
+          "hypedLabel",
+          "hypedQuote",
+          "hypedResult"
+        ]
+      }
+    },
+    "s4b": {
+      "captureLabel": "Regulatory capture",
+      "monster": "Governments are convinced it's a rogue monster…",
+      "lobby": "…then only incumbents can afford the rules.",
+      "locked": [
+        "Startups",
+        "Open source"
+      ],
+      "incumbent": "INCUMBENT",
+      "crush": "Competition, priced out.",
+      "_at": {
+        "_open": [
+          "captureLabel"
+        ],
+        "monster": [
+          "monster",
+          "locked",
+          "incumbent"
+        ]
+      }
+    },
+    "s5": {
+      "dangerLead": "The danger isn't a villain breaking out of a datacenter.",
+      "realLabel": "The boring conversations we're skipping",
+      "real": [
+        "Data privacy",
+        "Automated spam",
+        "Corporate accountability"
+      ],
+      "theater": "Stop falling for the theater.",
+      "notMagic": "It's not magic.",
+      "justMath": "It's just math.",
+      "_at": {
+        "_open": [
+          "dangerLead"
+        ],
+        "distracted": [
+          "realLabel",
+          "real"
+        ]
+      }
+    }
+  }
+}

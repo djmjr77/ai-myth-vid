@@ -1,0 +1,355 @@
+{
+  "s1a": {
+    "scene": 1,
+    "seconds": 20.947142999999997,
+    "cues": {
+      "gurus": 6.346531,
+      "claimEscape": 11.283674,
+      "claimBlackmail": 13.320613,
+      "camera": 15.983877999999999
+    },
+    "segments": [
+      {
+        "src": "audio/s1a-00.mp3",
+        "start": 0,
+        "seconds": 6.086531
+      },
+      {
+        "src": "audio/s1a-01.mp3",
+        "start": 6.346531,
+        "seconds": 4.937143
+      },
+      {
+        "src": "audio/s1a-02.mp3",
+        "start": 11.283674,
+        "seconds": 1.906939
+      },
+      {
+        "src": "audio/s1a-03.mp3",
+        "start": 13.320613,
+        "seconds": 2.403265
+      },
+      {
+        "src": "audio/s1a-04.mp3",
+        "start": 15.983877999999999,
+        "seconds": 4.963265
+      }
+    ]
+  },
+  "s1b": {
+    "scene": 1,
+    "seconds": 21.991429,
+    "cues": {
+      "notOrganic": 7.077959,
+      "fabricated": 9.349388,
+      "thesis": 11.986531
+    },
+    "segments": [
+      {
+        "src": "audio/s1b-00.mp3",
+        "start": 0,
+        "seconds": 6.817959
+      },
+      {
+        "src": "audio/s1b-01.mp3",
+        "start": 7.077959,
+        "seconds": 2.011429
+      },
+      {
+        "src": "audio/s1b-02.mp3",
+        "start": 9.349388,
+        "seconds": 2.377143
+      },
+      {
+        "src": "audio/s1b-03.mp3",
+        "start": 11.986531,
+        "seconds": 10.004898
+      }
+    ]
+  },
+  "s2a": {
+    "scene": 2,
+    "seconds": 16.505714,
+    "cues": {
+      "context": 4.648571,
+      "notAutonomous": 11.83102,
+      "redteam": 14.311428000000001
+    },
+    "segments": [
+      {
+        "src": "audio/s2a-00.mp3",
+        "start": 0,
+        "seconds": 4.388571
+      },
+      {
+        "src": "audio/s2a-01.mp3",
+        "start": 4.648571,
+        "seconds": 6.922449
+      },
+      {
+        "src": "audio/s2a-02.mp3",
+        "start": 11.83102,
+        "seconds": 2.220408
+      },
+      {
+        "src": "audio/s2a-03.mp3",
+        "start": 14.311428000000001,
+        "seconds": 2.194286
+      }
+    ]
+  },
+  "s2b": {
+    "scene": 2,
+    "seconds": 29.617549000000004,
+    "cues": {
+      "tools": 3.238571,
+      "prompt": 5.7718359999999995,
+      "notRebellion": 14.155509,
+      "path": 17.236733,
+      "crash": 24.157957000000003
+    },
+    "segments": [
+      {
+        "src": "audio/s2b-00.mp3",
+        "start": 0,
+        "seconds": 3.108571
+      },
+      {
+        "src": "audio/s2b-01.mp3",
+        "start": 3.238571,
+        "seconds": 2.403265
+      },
+      {
+        "src": "audio/s2b-02.mp3",
+        "start": 5.7718359999999995,
+        "seconds": 4.623673
+      },
+      {
+        "src": "audio/s2b-03.mp3",
+        "start": 14.155509,
+        "seconds": 2.821224
+      },
+      {
+        "src": "audio/s2b-04.mp3",
+        "start": 17.236733,
+        "seconds": 6.661224
+      },
+      {
+        "src": "audio/s2b-05.mp3",
+        "start": 24.157957000000003,
+        "seconds": 5.459592
+      }
+    ]
+  },
+  "s3a": {
+    "scene": 3,
+    "seconds": 16.714694,
+    "cues": {
+      "notAMind": 6.137551,
+      "engine": 7.651429,
+      "predict": 10.811021
+    },
+    "segments": [
+      {
+        "src": "audio/s3a-00.mp3",
+        "start": 0,
+        "seconds": 5.877551
+      },
+      {
+        "src": "audio/s3a-01.mp3",
+        "start": 6.137551,
+        "seconds": 1.253878
+      },
+      {
+        "src": "audio/s3a-02.mp3",
+        "start": 7.651429,
+        "seconds": 2.899592
+      },
+      {
+        "src": "audio/s3a-03.mp3",
+        "start": 10.811021,
+        "seconds": 5.903673
+      }
+    ]
+  },
+  "s3b": {
+    "scene": 3,
+    "seconds": 24.31449,
+    "cues": {
+      "card1": 2.716735,
+      "card2": 4.414082,
+      "card3": 5.615101999999999,
+      "knows": 8.122245,
+      "split": 11.961020999999999,
+      "math": 17.706735,
+      "close": 19.507959
+    },
+    "segments": [
+      {
+        "src": "audio/s3b-00.mp3",
+        "start": 0,
+        "seconds": 2.716735
+      },
+      {
+        "src": "audio/s3b-01.mp3",
+        "start": 2.716735,
+        "seconds": 1.567347
+      },
+      {
+        "src": "audio/s3b-02.mp3",
+        "start": 4.414082,
+        "seconds": 1.07102
+      },
+      {
+        "src": "audio/s3b-03.mp3",
+        "start": 5.615101999999999,
+        "seconds": 2.377143
+      },
+      {
+        "src": "audio/s3b-04.mp3",
+        "start": 8.122245,
+        "seconds": 3.578776
+      },
+      {
+        "src": "audio/s3b-05.mp3",
+        "start": 11.961020999999999,
+        "seconds": 5.485714
+      },
+      {
+        "src": "audio/s3b-06.mp3",
+        "start": 17.706735,
+        "seconds": 1.541224
+      },
+      {
+        "src": "audio/s3b-07.mp3",
+        "start": 19.507959,
+        "seconds": 4.806531
+      }
+    ]
+  },
+  "s4a": {
+    "scene": 4,
+    "seconds": 24.759182000000003,
+    "cues": {
+      "money": 6.686122,
+      "spreadsheet": 7.88653,
+      "conquer": 15.904897,
+      "godlike": 21.598366000000002
+    },
+    "segments": [
+      {
+        "src": "audio/s4a-00.mp3",
+        "start": 0,
+        "seconds": 6.426122
+      },
+      {
+        "src": "audio/s4a-01.mp3",
+        "start": 6.686122,
+        "seconds": 0.940408
+      },
+      {
+        "src": "audio/s4a-02.mp3",
+        "start": 7.88653,
+        "seconds": 7.758367
+      },
+      {
+        "src": "audio/s4a-03.mp3",
+        "start": 15.904897,
+        "seconds": 5.433469
+      },
+      {
+        "src": "audio/s4a-04.mp3",
+        "start": 21.598366000000002,
+        "seconds": 3.160816
+      }
+    ]
+  },
+  "s4b": {
+    "scene": 4,
+    "seconds": 15.906123000000001,
+    "cues": {
+      "monster": 3.9693880000000004,
+      "lobby": 7.861021,
+      "crush": 12.928164
+    },
+    "segments": [
+      {
+        "src": "audio/s4b-00.mp3",
+        "start": 0,
+        "seconds": 3.709388
+      },
+      {
+        "src": "audio/s4b-01.mp3",
+        "start": 3.9693880000000004,
+        "seconds": 3.761633
+      },
+      {
+        "src": "audio/s4b-02.mp3",
+        "start": 7.861021,
+        "seconds": 4.937143
+      },
+      {
+        "src": "audio/s4b-03.mp3",
+        "start": 12.928164,
+        "seconds": 2.977959
+      }
+    ]
+  },
+  "s5": {
+    "scene": 5,
+    "seconds": 22.617144000000003,
+    "cues": {
+      "distracted": 5.38,
+      "theater": 18.022041,
+      "notMagic": 19.953878000000003,
+      "justMath": 21.598368000000004
+    },
+    "segments": [
+      {
+        "src": "audio/s5-00.mp3",
+        "start": 0,
+        "seconds": 5.12
+      },
+      {
+        "src": "audio/s5-01.mp3",
+        "start": 5.38,
+        "seconds": 12.382041
+      },
+      {
+        "src": "audio/s5-02.mp3",
+        "start": 18.022041,
+        "seconds": 1.671837
+      },
+      {
+        "src": "audio/s5-03.mp3",
+        "start": 19.953878000000003,
+        "seconds": 1.38449
+      },
+      {
+        "src": "audio/s5-04.mp3",
+        "start": 21.598368000000004,
+        "seconds": 1.018776
+      }
+    ]
+  },
+  "s6": {
+    "scene": 6,
+    "seconds": 4.962040999999999,
+    "cues": {
+      "logo": 0,
+      "punchline": 2.010204
+    },
+    "segments": [
+      {
+        "src": "audio/s6-00.mp3",
+        "start": 0,
+        "seconds": 1.750204
+      },
+      {
+        "src": "audio/s6-01.mp3",
+        "start": 2.010204,
+        "seconds": 2.951837
+      }
+    ]
+  }
+}
