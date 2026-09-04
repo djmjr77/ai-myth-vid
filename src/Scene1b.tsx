@@ -31,7 +31,12 @@ const GRID = '#C3D6E8';
 const INK = '#1A1A1A';
 const HAND_FONT = '"Ink Free", "Segoe Print", "Comic Sans MS", cursive';
 
-export const S1B_FRAMES = beatFrames('s1b', 2.0);
+export const S1B_FRAMES = beatFrames('s1b', 1.4);
+/**
+ * Where this scene's narration sits inside it, for film-level ducking.
+ * The scene owns its own layout; Full.tsx should not have to know it.
+ */
+export const BEATS = [{ id: 's1b', at: 0 }];
 
 /** A doodled phone-shaped clip card, tossed on at an angle. */
 const ViralClip: React.FC<{

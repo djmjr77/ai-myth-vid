@@ -24,13 +24,21 @@ import { beat, beatFrames, copy, cue } from './cues';
  * visuals re-time automatically when the voice backend changes.
  */
 
-export const LEAD_IN = sec(0.5);
+export const LEAD_IN = sec(0.4);
 export const BEAT_GAP = sec(0.2);
-export const TAIL = sec(2.0);
+export const TAIL = sec(1.2);
 
 export const BEAT_A = beatFrames('s3a');
 export const BEAT_B = beatFrames('s3b');
 export const SCENE3_FRAMES = LEAD_IN + BEAT_A + BEAT_GAP + BEAT_B + TAIL;
+/**
+ * Where this scene's narration sits inside it, for film-level ducking.
+ * The scene owns its own layout; Full.tsx should not have to know it.
+ */
+export const BEATS = [
+  { id: 's3a', at: LEAD_IN },
+  { id: 's3b', at: LEAD_IN + BEAT_A + BEAT_GAP },
+];
 
 // ---------------------------------------------------------------- Beat A
 

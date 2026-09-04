@@ -26,25 +26,31 @@
       "text": "But behind the viral clips and the multi-billion dollar fear-mongering, lies a completely different reality. [[notOrganic]] The scenarios aren't organic. [[fabricated]] They are one hundred percent fabricated. [[thesis]] Today, we're pulling back the curtain on the AI safety grift, and explaining how simple matrix multiplication became the ultimate marketing ghost story.",
       "voice": {
         "effect": "intercom"
+      },
+      "holdAfter": {
+        "notOrganic": 0.4
+      },
+      "voiceAt": {
+        "notOrganic": {
+          "effect": "none"
+        }
       }
     },
     {
       "id": "s2a",
       "scene": 2,
       "text": "Let's start with the biggest headline. The AI tried to escape. [[context]] When a major tech lab reports that a model attempted to bypass its constraints, they rarely mention the context. [[notAutonomous]] This wasn't an autonomous decision. [[redteam]] It was a red-teaming evaluation.",
-      "voice": {
-        "effect": "intercom"
+      "holdAfter": {
+        "notAutonomous": 0.6
       }
     },
     {
       "id": "s2b",
       "scene": 2,
       "text": "Human engineers built a fake server environment, [[tools]] handed the AI automated tools, [[prompt]] and gave it an explicit prompt designed to simulate that exact behavior. [[notRebellion]] The AI didn't wake up and choose rebellion. [[path]] It followed a highly complex, pre-defined mathematical path laid out entirely by its creators. [[crash]] It is a calculated crash test, warped by the media into an organic breakout.",
-      "voice": {
-        "effect": "intercom"
-      },
       "holdAfter": {
-        "prompt": 4.0
+        "prompt": 4.5,
+        "notRebellion": 0.6
       }
     },
     {
@@ -62,7 +68,8 @@
       "scene": 4,
       "text": "So why do smart people, tech CEOs, and massive influencers parrot this misinformation? [[money]] Follow the money. [[spreadsheet]] If a tech company admits their AI is just an advanced statistical spreadsheet, venture capitalists lose interest. [[conquer]] But if they say their technology is so powerful it might accidentally conquer the world? [[godlike]] It creates an illusion of god-like capability.",
       "holdAfter": {
-        "_open": 0.5
+        "_open": 0.5,
+        "money": 0.7
       }
     },
     {
@@ -73,7 +80,11 @@
     {
       "id": "s5",
       "scene": 5,
-      "text": "The true danger of AI isn't that a sci-fi villain will break out of a datacenter. [[distracted]] The danger is that we are being distracted by ghost stories while missing the real, boring conversations we should be having about data privacy, automated spam, and corporate accountability. [[theater]] Stop falling for the theater. [[notMagic]] It's not magic. [[justMath]] It's just math."
+      "text": "The true danger of AI isn't that a sci-fi villain will break out of a datacenter. [[distracted]] The danger is that we are being distracted by ghost stories while missing the real, boring conversations we should be having about data privacy, automated spam, and corporate accountability. [[theater]] Stop falling for the theater. [[notMagic]] It's not magic. [[justMath]] It's just math.",
+      "holdAfter": {
+        "theater": 0.8,
+        "notMagic": 0.2
+      }
     },
     {
       "id": "s6",
@@ -105,7 +116,13 @@
           "bubbleBlackmail",
           "chyronBlackmail"
         ]
-      }
+      },
+      "_scheduled": [
+        "bubbleEscape",
+        "bubbleBlackmail",
+        "chyronEscape",
+        "chyronBlackmail"
+      ]
     },
     "s3a": {
       "inputLabel": "Input sequence",
@@ -212,7 +229,10 @@
         "mechanismTags": [
           "all"
         ]
-      }
+      },
+      "_scheduled": [
+        "mechanismTags"
+      ]
     },
     "s1b": {
       "clips": [

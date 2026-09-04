@@ -13,13 +13,24 @@ import { beat, beatFrames, copy, cue } from './cues';
  * revealed last, in an editor, with a cursor still in it.
  */
 
-export const LEAD_IN = sec(0.5);
+export const LEAD_IN = sec(0.4);
 export const BEAT_GAP = sec(0.2);
-export const TAIL = sec(2.0);
+export const TAIL = sec(1.2);
 
-export const BEAT_A = beatFrames('s2a');
+// Beat A ends on 'It was a red-teaming evaluation.' — the last cue in the beat,
+// so no holdAfter can widen it. The extra tail is what gives that line, and the
+// definition card under it, time to be read before the cut.
+export const BEAT_A = beatFrames('s2a', 0.7);
 export const BEAT_B = beatFrames('s2b');
 export const SCENE2_FRAMES = LEAD_IN + BEAT_A + BEAT_GAP + BEAT_B + TAIL;
+/**
+ * Where this scene's narration sits inside it, for film-level ducking.
+ * The scene owns its own layout; Full.tsx should not have to know it.
+ */
+export const BEATS = [
+  { id: 's2a', at: LEAD_IN },
+  { id: 's2b', at: LEAD_IN + BEAT_A + BEAT_GAP },
+];
 
 // ---------------------------------------------------------------- Beat A
 

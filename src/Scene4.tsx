@@ -14,13 +14,21 @@ import { beat, beatFrames, copy, cue } from './cues';
  * Beat B is structural rather than personal, so the figures leave entirely.
  */
 
-export const LEAD_IN = sec(0.5);
+export const LEAD_IN = sec(0.4);
 export const BEAT_GAP = sec(0.2);
-export const TAIL = sec(2.0);
+export const TAIL = sec(1.2);
 
 export const BEAT_A = beatFrames('s4a');
 export const BEAT_B = beatFrames('s4b');
 export const SCENE4_FRAMES = LEAD_IN + BEAT_A + BEAT_GAP + BEAT_B + TAIL;
+/**
+ * Where this scene's narration sits inside it, for film-level ducking.
+ * The scene owns its own layout; Full.tsx should not have to know it.
+ */
+export const BEATS = [
+  { id: 's4a', at: LEAD_IN },
+  { id: 's4b', at: LEAD_IN + BEAT_A + BEAT_GAP },
+];
 
 /** Two pitches, same product, opposite outcomes. */
 const Pitch: React.FC<{

@@ -10,6 +10,21 @@
 //
 // Pass beat ids to re-synthesize only those: `node scripts/tts.mjs s6`
 //
+// Two flags avoid needless re-synthesis, which matters because the neural
+// backend is stochastic: re-running a beat re-rolls every take in it, so a
+// one-word fix silently discards performances that were already reviewed.
+//
+//   --retime   recompute the timeline from the audio already on disk, never
+//              calling the voice server. Gaps and holds are pure timing config
+//              and do not alter a single sample of narration, so
+//              `node scripts/tts.mjs --retime s4a` applies a new hold in
+//              milliseconds instead of minutes, and works with the server down.
+//              Anything it cannot reuse is a hard error.
+//   --repair   synthesize only the segments that are missing or whose line
+//              changed, and keep the rest. The everyday flag after a script
+//              edit; `--retime`'s strictness is for when nothing changed but
+//              the timing.
+//
 // A beat may also carry `holdAfter: { "<cue>": seconds }` to hold silence after
 // the segment starting at that cue — for giving the viewer time to read
 // something, or to set a line up with a beat of silence. Use "_open" for the
@@ -255,6 +270,44 @@ const synthesize = async (text, outPath, voice) => {
   return fn(text, outPath, voice);
 };
 
+/** A segment ends its sentence if it closes on terminal punctuation. */
+const SENTENCE_END = /[.!?]["')\]]*$/;
+
+/**
+ * Where this segment sits in its sentence — 'leading' | 'medial' | 'final' |
+ * 'standalone'.
+ *
+ * The server calls this the single most important knob for concatenation
+ * quality, and it is right: a fragment synthesized as 'standalone' gets
+ * sentence-final falling intonation, so a cue marker dropped mid-sentence made
+ * the model read "hacking forums," as a finished utterance. Splitting on cues
+ * is this pipeline's whole design, so almost every list and clause was hitting
+ * that. Derived from punctuation rather than authored, for the same reason cue
+ * times are measured rather than typed.
+ */
+function roleFor(segments, i) {
+  const ends = SENTENCE_END.test(segments[i].text.trim());
+  const starts = i === 0 || SENTENCE_END.test(segments[i - 1].text.trim());
+  if (starts) return ends ? 'standalone' : 'leading';
+  return ends ? 'final' : 'medial';
+}
+
+/**
+ * Fingerprint of everything about a voice that changes the samples produced.
+ * Recorded per segment so --repair can tell that a beat's voice was re-pointed
+ * even though its text is untouched — the intercom-scope change was exactly
+ * that, and without this it would have silently kept the old takes.
+ */
+const voiceKey = (v) =>
+  [
+    v.provider,
+    v.voiceId ?? v.sapiName ?? '',
+    v.effect ?? 'none',
+    v.speed ?? 1,
+    v.normalize ? 'normalized' : 'raw',
+    v.language ?? '',
+  ].join('|');
+
 /**
  * Splitting removes the pause the voice would naturally have produced, so put it
  * back — a full stop earns more silence than a comma.
@@ -275,6 +328,19 @@ const gaps = { sentence: 0.26, clause: 0.13, ...(config.gaps ?? {}) };
 // `node scripts/tts.mjs s6 s3a` re-synthesizes only those beats and leaves the
 // rest of the manifest intact — re-running every beat against a remote server
 // to change one line is slow and pointless.
+const flags = process.argv.slice(2).filter((a) => a.startsWith('-'));
+const RETIME = flags.includes('--retime');
+const REPAIR = flags.includes('--repair');
+const KNOWN_FLAGS = ['--retime', '--repair'];
+const unknownFlag = flags.find((f) => !KNOWN_FLAGS.includes(f));
+if (unknownFlag) {
+  throw new Error(`unknown flag ${unknownFlag} — expected one of: ${KNOWN_FLAGS.join(', ')}`);
+}
+if (RETIME && REPAIR) {
+  throw new Error('--retime and --repair contradict each other: one refuses to synthesize, the other exists to');
+}
+const REUSING = RETIME || REPAIR;
+
 const only = process.argv.slice(2).filter((a) => !a.startsWith('-'));
 const selected = only.length ? beats.filter((b) => only.includes(b.id)) : beats;
 if (only.length) {
@@ -283,28 +349,121 @@ if (only.length) {
 }
 
 const MANIFEST_PATH = join(ROOT, 'src', 'audio-manifest.json');
+// Retiming reads every beat's measured durations back out, so the manifest is
+// required rather than merely merged into.
 const manifest =
-  only.length && existsSync(MANIFEST_PATH)
+  (only.length || REUSING) && existsSync(MANIFEST_PATH)
     ? JSON.parse(readFileSync(MANIFEST_PATH, 'utf8'))
     : {};
+if (REUSING && !existsSync(MANIFEST_PATH)) {
+  throw new Error('--retime/--repair need src/audio-manifest.json; synthesize at least once first');
+}
+
+/**
+ * Can this segment's existing audio stand in for a fresh take?
+ *
+ * The checks are the whole point. Reusing a measurement is only sound if the
+ * audio it measured still exists and still says what the script says. Returns
+ * a reason instead of a boolean so the caller can either report it (--repair)
+ * or refuse (--retime) — the two modes differ only in what they do with it.
+ */
+function reusable(beat, i, seg, prior, role, key) {
+  const rec = prior?.segments?.[i];
+  if (!rec) return { ok: false, why: 'not in the manifest' };
+  if (typeof rec.seconds !== 'number') return { ok: false, why: 'no measured duration' };
+  const path = join(ROOT, 'public', rec.src);
+  if (!existsSync(path)) return { ok: false, why: `${rec.src} is missing from disk` };
+  if (rec.text !== undefined && rec.text !== seg.text) {
+    return { ok: false, why: 'the line changed', was: rec.text };
+  }
+  if (rec.role !== undefined && rec.role !== role) {
+    return { ok: false, why: `the fragment role changed (${rec.role} -> ${role})` };
+  }
+  if (rec.voice !== undefined && rec.voice !== key) {
+    return { ok: false, why: 'the voice changed' };
+  }
+  // `text` is recorded from now on; entries written before that can only be
+  // taken on trust. Say so rather than implying a check that did not run.
+  return {
+    ok: true,
+    path,
+    seconds: rec.seconds,
+    unverified: rec.text === undefined || rec.voice === undefined,
+  };
+}
 
 mkdirSync(AUDIO_DIR, { recursive: true });
 
 for (const beat of selected) {
-  const voice = resolveVoice(beat, config);
   const segments = segment(normalize(beat.text));
+  // A beat may change voice partway through, keyed by cue exactly like
+  // holdAfter. Scene 1b needs it: the narration is on the podcast's intercom
+  // until the record scratch, then in the film's own voice for the dark world
+  // the scratch reveals — one beat, two registers, because the cut lands
+  // mid-beat and splitting the beat would put a seam in the narration.
+  const voiceOverride = {};
+  const voiceAtCue = (cue) => {
+    if (cue && beat.voiceAt?.[cue]) Object.assign(voiceOverride, beat.voiceAt[cue]);
+    return resolveVoice({ ...beat, voice: { ...(beat.voice ?? {}), ...voiceOverride } }, config);
+  };
+  for (const cue of Object.keys(beat.voiceAt ?? {})) {
+    if (!segments.some((sg) => sg.cue === cue)) {
+      throw new Error(`${beat.id}: voiceAt names cue "${cue}", which is not in the narration`);
+    }
+  }
+  let voice = voiceAtCue(null);
   const cues = {};
   const files = [];
   let elapsed = 0;
+
+  const prior = manifest[beat.id];
+  // Segments are matched by index, so a changed cue count silently repoints
+  // every later segment at the wrong audio. Refuse rather than guess.
+  if (REUSING && prior?.segments?.length !== segments.length) {
+    const had = prior?.segments?.length ?? 0;
+    if (RETIME) {
+      throw new Error(
+        `${beat.id}: the script now splits into ${segments.length} segment(s) but the manifest ` +
+          `has ${had} — the cue markers changed, so this beat needs synthesizing in full`,
+      );
+    }
+    console.warn(`  ! ${beat.id}: cue markers changed (${had} -> ${segments.length} segments); synthesizing the whole beat`);
+  }
+  let unverified = 0;
+  let fresh = 0;
 
   for (const [i, seg] of segments.entries()) {
     // Each segment stays its own file. Remotion schedules them at the offsets
     // recorded here, so nothing needs decoding or concatenating and any container
     // the browser can play works — WAV from SAPI, MP3 from Chatterbox.
     const stem = join(AUDIO_DIR, `${beat.id}-${String(i).padStart(2, '0')}`);
-    // Drop any earlier take in another container, or the old one lingers unused.
-    for (const ext of ['wav', 'mp3', 'ogg', 'flac']) rmSync(`${stem}.${ext}`, { force: true });
-    const { path, seconds } = await synthesize(seg.text, stem, voice);
+    voice = voiceAtCue(seg.cue);
+    const role = roleFor(segments, i);
+    const key = voiceKey(voice);
+    let path;
+    let seconds;
+    const keep =
+      REUSING && prior?.segments?.length === segments.length
+        ? reusable(beat, i, seg, prior, role, key)
+        : { ok: false, why: 'not reusing' };
+    if (RETIME && !keep.ok) {
+      throw new Error(
+        `${beat.id}[${i}]: ${keep.why} — --retime cannot cover that. ` +
+          'Use --repair to synthesize just what changed.',
+      );
+    }
+    if (keep.ok) {
+      ({ path, seconds } = keep);
+      if (keep.unverified) unverified++;
+    } else {
+      if (REPAIR) {
+        console.log(`  + ${beat.id}[${i}] ${keep.why} -> synthesizing`);
+        fresh++;
+      }
+      // Drop any earlier take in another container, or the old one lingers unused.
+      for (const ext of ['wav', 'mp3', 'ogg', 'flac']) rmSync(`${stem}.${ext}`, { force: true });
+      ({ path, seconds } = await synthesize(seg.text, stem, { ...voice, role }));
+    }
     if (seconds === undefined) {
       throw new Error(`${beat.id}[${i}]: provider returned no duration for ${path}`);
     }
@@ -314,7 +473,19 @@ for (const beat of selected) {
       cues[seg.cue] = elapsed;
     }
 
-    files.push({ src: `audio/${basename(path)}`, start: elapsed, seconds });
+    // Storing the line alongside its measurement is what lets a later --retime
+    // prove the audio still matches the script. Only record it when this run
+    // actually established the pairing — either by synthesizing the line, or by
+    // checking it against a text the manifest already carried. Writing it after
+    // reusing an unverified segment would launder a guess into a guarantee.
+    const certified = !keep.ok || !keep.unverified;
+    files.push({
+      src: `audio/${basename(path)}`,
+      start: elapsed,
+      seconds,
+      role,
+      ...(certified ? { text: seg.text, voice: key } : {}),
+    });
     elapsed += seconds;
 
     // Restore the pause the voice would have produced reading straight through,
@@ -334,10 +505,21 @@ for (const beat of selected) {
 
   manifest[beat.id] = { scene: beat.scene, seconds: elapsed, cues, segments: files };
 
-  const via =
+  const engine =
     voice.provider === 'sapi'
       ? `sapi:${voice.sapiName}`
       : `${voice.provider}:${voice.voiceId ?? 'default'}`;
+  const via = RETIME
+    ? 'retimed (no synthesis)'
+    : REPAIR
+      ? `${engine} (${fresh}/${segments.length} fresh)`
+      : engine;
+  if (unverified) {
+    console.warn(
+      `  ! ${beat.id}: ${unverified} segment(s) were synthesized before the manifest recorded ` +
+        `its text, so the audio was reused on trust rather than verified`,
+    );
+  }
   const cueList = Object.entries(cues)
     .map(([k, v]) => `${k}@${v.toFixed(1)}`)
     .join('  ');
@@ -349,6 +531,7 @@ for (const beat of selected) {
 
 writeFileSync(join(ROOT, 'src', 'audio-manifest.json'), JSON.stringify(manifest, null, 2));
 console.log(
-  `\nwrote ${selected.length} of ${beats.length} beat(s) -> src/audio-manifest.json` +
+  `\n${RETIME ? 'retimed' : 'wrote'} ${selected.length} of ${beats.length} beat(s) -> ` +
+    'src/audio-manifest.json' +
     (only.length ? '  (others left untouched)' : ''),
 );

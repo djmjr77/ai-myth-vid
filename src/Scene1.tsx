@@ -24,7 +24,12 @@ const PAPER = '#FDFDF7';
 const GRID = '#C3D6E8';
 const INK = '#1A1A1A';
 
-export const S1A_FRAMES = beatFrames('s1a', 2.0);
+export const S1A_FRAMES = beatFrames('s1a', 1.4);
+/**
+ * Where this scene's narration sits inside it, for film-level ducking.
+ * The scene owns its own layout; Full.tsx should not have to know it.
+ */
+export const BEATS = [{ id: 's1a', at: 0 }];
 
 const HAND_FONT = '"Ink Free", "Segoe Print", "Comic Sans MS", cursive';
 

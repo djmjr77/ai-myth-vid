@@ -1,143 +1,194 @@
 {
   "s1a": {
     "scene": 1,
-    "seconds": 20.947142999999997,
+    "seconds": 20.92102,
     "cues": {
       "gurus": 6.346531,
-      "claimEscape": 11.283674,
-      "claimBlackmail": 13.320613,
-      "camera": 15.983877999999999
+      "claimEscape": 11.309795999999999,
+      "claimBlackmail": 13.29449,
+      "camera": 15.957755
     },
     "segments": [
       {
         "src": "audio/s1a-00.mp3",
         "start": 0,
-        "seconds": 6.086531
+        "seconds": 6.086531,
+        "role": "standalone"
       },
       {
         "src": "audio/s1a-01.mp3",
         "start": 6.346531,
-        "seconds": 4.937143
+        "seconds": 4.963265,
+        "role": "leading",
+        "text": "Tech gurus and major influencers talking about artificial intelligence",
+        "voice": "transit-voice|cb_en_agency|intercom|0.8|raw|"
       },
       {
         "src": "audio/s1a-02.mp3",
-        "start": 11.283674,
-        "seconds": 1.906939
+        "start": 11.309795999999999,
+        "seconds": 1.854694,
+        "role": "medial",
+        "text": "trying to break out of its server,",
+        "voice": "transit-voice|cb_en_agency|intercom|0.8|raw|"
       },
       {
         "src": "audio/s1a-03.mp3",
-        "start": 13.320613,
-        "seconds": 2.403265
+        "start": 13.29449,
+        "seconds": 2.403265,
+        "role": "final",
+        "text": "or models blackmailing their users.",
+        "voice": "transit-voice|cb_en_agency|intercom|0.8|raw|"
       },
       {
         "src": "audio/s1a-04.mp3",
-        "start": 15.983877999999999,
-        "seconds": 4.963265
+        "start": 15.957755,
+        "seconds": 4.963265,
+        "role": "standalone"
       }
     ]
   },
   "s1b": {
     "scene": 1,
-    "seconds": 21.991429,
+    "seconds": 22.313060999999998,
     "cues": {
       "notOrganic": 7.077959,
-      "fabricated": 9.349388,
-      "thesis": 11.986531
+      "fabricated": 9.723265,
+      "thesis": 12.334285
     },
     "segments": [
       {
         "src": "audio/s1b-00.mp3",
         "start": 0,
-        "seconds": 6.817959
+        "seconds": 6.817959,
+        "role": "standalone"
       },
       {
         "src": "audio/s1b-01.mp3",
         "start": 7.077959,
-        "seconds": 2.011429
+        "seconds": 1.985306,
+        "role": "standalone",
+        "text": "The scenarios aren't organic.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s1b-02.mp3",
-        "start": 9.349388,
-        "seconds": 2.377143
+        "start": 9.723265,
+        "seconds": 2.35102,
+        "role": "standalone",
+        "text": "They are one hundred percent fabricated.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s1b-03.mp3",
-        "start": 11.986531,
-        "seconds": 10.004898
+        "start": 12.334285,
+        "seconds": 9.978776,
+        "role": "standalone",
+        "text": "Today, we're pulling back the curtain on the AI safety grift, and explaining how simple matrix multiplication became the ultimate marketing ghost story.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       }
     ]
   },
   "s2a": {
     "scene": 2,
-    "seconds": 16.505714,
+    "seconds": 17.001224999999998,
     "cues": {
-      "context": 4.648571,
-      "notAutonomous": 11.83102,
-      "redteam": 14.311428000000001
+      "context": 4.622449,
+      "notAutonomous": 11.804898,
+      "redteam": 14.859183999999999
     },
     "segments": [
       {
         "src": "audio/s2a-00.mp3",
         "start": 0,
-        "seconds": 4.388571
+        "seconds": 4.362449,
+        "role": "standalone",
+        "text": "Let's start with the biggest headline. The AI tried to escape.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s2a-01.mp3",
-        "start": 4.648571,
-        "seconds": 6.922449
+        "start": 4.622449,
+        "seconds": 6.922449,
+        "role": "standalone",
+        "text": "When a major tech lab reports that a model attempted to bypass its constraints, they rarely mention the context.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s2a-02.mp3",
-        "start": 11.83102,
-        "seconds": 2.220408
+        "start": 11.804898,
+        "seconds": 2.194286,
+        "role": "standalone",
+        "text": "This wasn't an autonomous decision.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s2a-03.mp3",
-        "start": 14.311428000000001,
-        "seconds": 2.194286
+        "start": 14.859183999999999,
+        "seconds": 2.142041,
+        "role": "standalone",
+        "text": "It was a red-teaming evaluation.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       }
     ]
   },
   "s2b": {
     "scene": 2,
-    "seconds": 29.617549000000004,
+    "seconds": 31.086939000000005,
     "cues": {
-      "tools": 3.238571,
-      "prompt": 5.7718359999999995,
-      "notRebellion": 14.155509,
-      "path": 17.236733,
-      "crash": 24.157957000000003
+      "tools": 3.160204,
+      "prompt": 5.771837,
+      "notRebellion": 15.129388,
+      "path": 18.758368000000004,
+      "crash": 25.653470000000006
     },
     "segments": [
       {
         "src": "audio/s2b-00.mp3",
         "start": 0,
-        "seconds": 3.108571
+        "seconds": 3.030204,
+        "role": "leading",
+        "text": "Human engineers built a fake server environment,",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s2b-01.mp3",
-        "start": 3.238571,
-        "seconds": 2.403265
+        "start": 3.160204,
+        "seconds": 2.481633,
+        "role": "medial",
+        "text": "handed the AI automated tools,",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s2b-02.mp3",
-        "start": 5.7718359999999995,
-        "seconds": 4.623673
+        "start": 5.771837,
+        "seconds": 4.597551,
+        "role": "final",
+        "text": "and gave it an explicit prompt designed to simulate that exact behavior.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s2b-03.mp3",
-        "start": 14.155509,
-        "seconds": 2.821224
+        "start": 15.129388,
+        "seconds": 2.76898,
+        "role": "standalone",
+        "text": "The AI didn't wake up and choose rebellion.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s2b-04.mp3",
-        "start": 17.236733,
-        "seconds": 6.661224
+        "start": 18.758368000000004,
+        "seconds": 6.635102,
+        "role": "standalone",
+        "text": "It followed a highly complex, pre-defined mathematical path laid out entirely by its creators.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s2b-05.mp3",
-        "start": 24.157957000000003,
-        "seconds": 5.459592
+        "start": 25.653470000000006,
+        "seconds": 5.433469,
+        "role": "standalone",
+        "text": "It is a calculated crash test, warped by the media into an organic breakout.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       }
     ]
   },
@@ -153,202 +204,246 @@
       {
         "src": "audio/s3a-00.mp3",
         "start": 0,
-        "seconds": 5.877551
+        "seconds": 5.877551,
+        "role": "standalone"
       },
       {
         "src": "audio/s3a-01.mp3",
         "start": 6.137551,
-        "seconds": 1.253878
+        "seconds": 1.253878,
+        "role": "standalone"
       },
       {
         "src": "audio/s3a-02.mp3",
         "start": 7.651429,
-        "seconds": 2.899592
+        "seconds": 2.899592,
+        "role": "standalone"
       },
       {
         "src": "audio/s3a-03.mp3",
         "start": 10.811021,
-        "seconds": 5.903673
+        "seconds": 5.903673,
+        "role": "standalone"
       }
     ]
   },
   "s3b": {
     "scene": 3,
-    "seconds": 24.31449,
+    "seconds": 24.627959000000004,
     "cues": {
-      "card1": 2.716735,
-      "card2": 4.414082,
-      "card3": 5.615101999999999,
-      "knows": 8.122245,
-      "split": 11.961020999999999,
-      "math": 17.706735,
-      "close": 19.507959
+      "card1": 2.533878,
+      "card2": 4.205102,
+      "card3": 5.876326,
+      "knows": 8.435714,
+      "split": 12.27449,
+      "math": 18.020204000000003,
+      "close": 19.821428000000004
     },
     "segments": [
       {
         "src": "audio/s3b-00.mp3",
         "start": 0,
-        "seconds": 2.716735
+        "seconds": 2.533878,
+        "role": "leading",
+        "text": "Because its data includes thousands of",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s3b-01.mp3",
-        "start": 2.716735,
-        "seconds": 1.567347
+        "start": 2.533878,
+        "seconds": 1.541224,
+        "role": "medial",
+        "text": "science-fiction novels,",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s3b-02.mp3",
-        "start": 4.414082,
-        "seconds": 1.07102
+        "start": 4.205102,
+        "seconds": 1.541224,
+        "role": "medial",
+        "text": "hacking forums,",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s3b-03.mp3",
-        "start": 5.615101999999999,
-        "seconds": 2.377143
+        "start": 5.876326,
+        "seconds": 2.429388,
+        "role": "medial",
+        "text": "and human psychological manipulation,",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s3b-04.mp3",
-        "start": 8.122245,
-        "seconds": 3.578776
+        "start": 8.435714,
+        "seconds": 3.578776,
+        "role": "final",
+        "text": "it knows exactly what a threat or a breakout looks like.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s3b-05.mp3",
-        "start": 11.961020999999999,
-        "seconds": 5.485714
+        "start": 12.27449,
+        "seconds": 5.485714,
+        "role": "standalone"
       },
       {
         "src": "audio/s3b-06.mp3",
-        "start": 17.706735,
-        "seconds": 1.541224
+        "start": 18.020204000000003,
+        "seconds": 1.541224,
+        "role": "standalone"
       },
       {
         "src": "audio/s3b-07.mp3",
-        "start": 19.507959,
-        "seconds": 4.806531
+        "start": 19.821428000000004,
+        "seconds": 4.806531,
+        "role": "standalone"
       }
     ]
   },
   "s4a": {
     "scene": 4,
-    "seconds": 24.759182000000003,
+    "seconds": 25.959182000000002,
     "cues": {
-      "money": 6.686122,
-      "spreadsheet": 7.88653,
-      "conquer": 15.904897,
-      "godlike": 21.598366000000002
+      "money": 7.186122,
+      "spreadsheet": 9.08653,
+      "conquer": 17.104897,
+      "godlike": 22.798366
     },
     "segments": [
       {
         "src": "audio/s4a-00.mp3",
         "start": 0,
-        "seconds": 6.426122
+        "seconds": 6.426122,
+        "role": "standalone"
       },
       {
         "src": "audio/s4a-01.mp3",
-        "start": 6.686122,
-        "seconds": 0.940408
+        "start": 7.186122,
+        "seconds": 0.940408,
+        "role": "standalone"
       },
       {
         "src": "audio/s4a-02.mp3",
-        "start": 7.88653,
-        "seconds": 7.758367
+        "start": 9.08653,
+        "seconds": 7.758367,
+        "role": "standalone"
       },
       {
         "src": "audio/s4a-03.mp3",
-        "start": 15.904897,
-        "seconds": 5.433469
+        "start": 17.104897,
+        "seconds": 5.433469,
+        "role": "standalone"
       },
       {
         "src": "audio/s4a-04.mp3",
-        "start": 21.598366000000002,
-        "seconds": 3.160816
+        "start": 22.798366,
+        "seconds": 3.160816,
+        "role": "standalone"
       }
     ]
   },
   "s4b": {
     "scene": 4,
-    "seconds": 15.906123000000001,
+    "seconds": 16.402449,
     "cues": {
       "monster": 3.9693880000000004,
-      "lobby": 7.861021,
-      "crush": 12.928164
+      "lobby": 7.887143000000001,
+      "crush": 13.42449
     },
     "segments": [
       {
         "src": "audio/s4b-00.mp3",
         "start": 0,
-        "seconds": 3.709388
+        "seconds": 3.709388,
+        "role": "standalone"
       },
       {
         "src": "audio/s4b-01.mp3",
         "start": 3.9693880000000004,
-        "seconds": 3.761633
+        "seconds": 3.787755,
+        "role": "leading",
+        "text": "By convincing governments that AI is a rogue monster,",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s4b-02.mp3",
-        "start": 7.861021,
-        "seconds": 4.937143
+        "start": 7.887143000000001,
+        "seconds": 5.407347,
+        "role": "medial",
+        "text": "giant tech monopolies can lobby for heavy regulations that only they can afford,",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       },
       {
         "src": "audio/s4b-03.mp3",
-        "start": 12.928164,
-        "seconds": 2.977959
+        "start": 13.42449,
+        "seconds": 2.977959,
+        "role": "final",
+        "text": "effectively crushing open-source competition.",
+        "voice": "transit-voice|cb_en_agency|none|0.8|raw|"
       }
     ]
   },
   "s5": {
     "scene": 5,
-    "seconds": 22.617144000000003,
+    "seconds": 23.617144000000003,
     "cues": {
       "distracted": 5.38,
       "theater": 18.022041,
-      "notMagic": 19.953878000000003,
-      "justMath": 21.598368000000004
+      "notMagic": 20.753878000000004,
+      "justMath": 22.598368000000004
     },
     "segments": [
       {
         "src": "audio/s5-00.mp3",
         "start": 0,
-        "seconds": 5.12
+        "seconds": 5.12,
+        "role": "standalone"
       },
       {
         "src": "audio/s5-01.mp3",
         "start": 5.38,
-        "seconds": 12.382041
+        "seconds": 12.382041,
+        "role": "standalone"
       },
       {
         "src": "audio/s5-02.mp3",
         "start": 18.022041,
-        "seconds": 1.671837
+        "seconds": 1.671837,
+        "role": "standalone"
       },
       {
         "src": "audio/s5-03.mp3",
-        "start": 19.953878000000003,
-        "seconds": 1.38449
+        "start": 20.753878000000004,
+        "seconds": 1.38449,
+        "role": "standalone"
       },
       {
         "src": "audio/s5-04.mp3",
-        "start": 21.598368000000004,
-        "seconds": 1.018776
+        "start": 22.598368000000004,
+        "seconds": 1.018776,
+        "role": "standalone"
       }
     ]
   },
   "s6": {
     "scene": 6,
-    "seconds": 4.962040999999999,
+    "seconds": 6.581633,
     "cues": {
       "logo": 0,
-      "punchline": 2.010204
+      "punchline": 3.211837
     },
     "segments": [
       {
         "src": "audio/s6-00.mp3",
         "start": 0,
-        "seconds": 1.750204
+        "seconds": 2.951837,
+        "role": "standalone"
       },
       {
         "src": "audio/s6-01.mp3",
-        "start": 2.010204,
-        "seconds": 2.951837
+        "start": 3.211837,
+        "seconds": 3.369796,
+        "role": "standalone"
       }
     ]
   }

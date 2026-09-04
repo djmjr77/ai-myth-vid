@@ -12,9 +12,14 @@ import { beat, beatFrames, copy, cue } from './cues';
  * so the closing claim isn't competing with anything.
  */
 
-export const LEAD_IN = sec(0.5);
-export const TAIL = sec(2.6);
+export const LEAD_IN = sec(0.4);
+export const TAIL = sec(1.8);
 export const SCENE5_FRAMES = LEAD_IN + beatFrames('s5') + TAIL;
+/**
+ * Where this scene's narration sits inside it, for film-level ducking.
+ * The scene owns its own layout; Full.tsx should not have to know it.
+ */
+export const BEATS = [{ id: 's5', at: LEAD_IN }];
 
 const Body: React.FC = () => {
   const frame = useCurrentFrame();

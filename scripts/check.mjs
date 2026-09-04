@@ -20,12 +20,13 @@
 // The convention that makes (1) work: name a copy key after the cue whose moment
 // it belongs to. Unpaired copy still appears in the sheet, just unchecked.
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { normalize, segment } from './segment.mjs';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const SRC_DIR = join(ROOT, 'src');
 const config = JSON.parse(readFileSync(join(ROOT, 'scripts', 'narration.json'), 'utf8'));
 const manifest = JSON.parse(readFileSync(join(ROOT, 'src', 'audio-manifest.json'), 'utf8'));
 
@@ -231,29 +232,113 @@ if (!process.argv.includes('--quiet')) {
  * usually watching an animation at the same time.
  *
  * The window is the gap to the next cue, which is what governs how long most
- * elements actually stay up.
+ * elements actually stay up — with one exception. Definition cards schedule
+ * themselves (see definitions() in src/cues.ts): they hold for as long as the
+ * text needs, overhanging the beat and starting early when the cue window is
+ * too short. Measuring those against the cue gap reports a shortfall the
+ * viewer never experiences, and an audit that cries wolf stops being read.
  */
 const READ_CPS = 15;
 const ACQUIRE_S = 0.7;
 const readingTime = (text) => text.trim().length / READ_CPS + ACQUIRE_S;
 
+/**
+ * How long the last cue's element keeps the screen after the narration stops.
+ *
+ * A scene runs past its audio: elements given no explicit `out` stay up through
+ * the scene's tail, so the final caption of every beat gets more time than the
+ * cue gap suggests. Ignoring that made this audit flag the film's last line and
+ * its biggest statements, all of which are on screen for seconds.
+ *
+ * The tails are read out of the scene sources rather than copied here, because
+ * a second hand-maintained copy of a timing constant is the exact drift this
+ * script exists to catch. Only two shapes actually keep a caption on screen:
+ *
+ *   beatFrames('s1a', 2.0)                     the beat's own Sequence is longer
+ *   durationInFrames={beatFrames('s5') + TAIL} the tail is inside the Sequence
+ *
+ * A scene-level TAIL added *outside* the beat Sequence — how Scenes 2, 3 and 4
+ * are built — is empty backdrop after the captions have already unmounted, and
+ * grants nothing. Anything not matching yields zero, which over-reports rather
+ * than under-reports, so a parse failure can never hide a real problem.
+ */
+function sceneTails() {
+  const perBeat = new Map();
+  for (const file of readdirSync(SRC_DIR).filter((f) => /^Scene\d/.test(f))) {
+    const src = readFileSync(join(SRC_DIR, file), 'utf8');
+    const namedTail = src.match(/const TAIL = sec\(([\d.]+)\)/);
+    // A tail passed straight to beatFrames lengthens that beat's own Sequence.
+    for (const m of src.matchAll(/beatFrames\(\s*'([^']+)'\s*,\s*([\d.]+)\s*\)/g)) {
+      perBeat.set(m[1], Number(m[2]));
+    }
+    // ...as does a TAIL added inside the Sequence's own duration.
+    for (const m of src.matchAll(
+      /durationInFrames=\{\s*beatFrames\(\s*'([^']+)'\s*\)\s*\+\s*TAIL\s*\}/g,
+    )) {
+      if (namedTail) perBeat.set(m[1], Number(namedTail[1]));
+    }
+  }
+  return perBeat;
+}
+
+const TAILS = sceneTails();
+
+/** Seconds the final caption of a beat stays up after its narration ends. */
+const tailFor = (beatId) => TAILS.get(beatId) ?? 0;
+
+/** Must stay in step with DEF_OVERHANG_S in src/cues.ts. */
+const DEF_OVERHANG_S = 1.6;
+const isDefinition = (key) => key.endsWith('Def') && key.length > 3 && !key.startsWith('_');
+
+/**
+ * The window a definition card actually gets, mirroring definitions() in
+ * src/cues.ts. Duplicated rather than imported because that module is TS and
+ * this script runs on bare node; the two comments point at each other.
+ */
+function definitionWindow(text, at, cueTimes, beatSeconds) {
+  const need = readingTime(text);
+  const next = cueTimes.find((t) => t > at) ?? beatSeconds;
+  const until = Math.min(Math.max(next, at + need), beatSeconds + DEF_OVERHANG_S);
+  const start = Math.max(0, Math.min(at, until - need));
+  return until - start;
+}
+
 const tight = [];
+const exempt = [];
 for (const b of config.beats) {
   const audio = manifest[b.id];
   if (!audio) continue;
   const entries = Object.entries(audio.cues).sort((a, z) => a[1] - z[1]);
   const copyForBeat = copyTable[b.id] ?? {};
   const decorative = new Set(copyForBeat._decorative ?? []);
+  // Elements the scene positions by hand — leading their cue, or holding past
+  // the next one. Their real window is not the cue gap, and this script cannot
+  // see it, so measuring them produces a shortfall the viewer never experiences.
+  // Reported as a count rather than dropped, so the exemption stays visible.
+  const scheduled = new Set(copyForBeat._scheduled ?? []);
+
+  const cueTimes = entries.map(([, t]) => t);
+  const tail = tailFor(b.id);
 
   entries.forEach(([name, at], i) => {
-    const next = i + 1 < entries.length ? entries[i + 1][1] : audio.seconds;
-    const window = next - at;
+    // The last cue's element holds through the scene tail, not just to the end
+    // of the audio.
+    const next = i + 1 < entries.length ? entries[i + 1][1] : audio.seconds + tail;
     for (const key of keysForCue(name, copyForBeat)) {
       if (decorative.has(key)) continue;
+      if (scheduled.has(key)) {
+        exempt.push(`${b.id}.${key}`);
+        continue;
+      }
       const text = copyText(copyForBeat[key]);
       const need = readingTime(text);
-      if (need > window) {
-        tight.push({ beat: b.id, key, window, need,
+      const window = isDefinition(key)
+        ? definitionWindow(text, at, cueTimes, audio.seconds)
+        : next - at;
+      // Definitions are clamped by the beat's end, so one can still come up
+      // short — that is a real finding, and worth keeping.
+      if (need > window + 1e-6) {
+        tight.push({ beat: b.id, key, window, need, definition: isDefinition(key),
           preview: text.length > 46 ? text.slice(0, 43) + '...' : text });
       }
     }
@@ -266,12 +351,19 @@ if (tight.length) {
   for (const t of tight) {
     console.log(
       `  ${(t.beat + '.' + t.key).padEnd(32)} shown ${t.window.toFixed(1)}s, ` +
-        `needs ${t.need.toFixed(1)}s  (short ${(t.need - t.window).toFixed(1)}s)`,
+        `needs ${t.need.toFixed(1)}s  (short ${(t.need - t.window).toFixed(1)}s)` +
+        (t.definition ? '  [definition — capped by the end of the beat]' : ''),
     );
     console.log(`      "${t.preview}"`);
   }
 } else {
   console.log('\nall captions have time to be read');
+}
+if (exempt.length) {
+  console.log(
+    `\n${exempt.length} caption(s) not audited — the scene schedules them itself: ` +
+      exempt.join(', '),
+  );
 }
 
 if (findings.length === 0) {

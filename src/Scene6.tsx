@@ -13,7 +13,12 @@ import { beat, beatFrames, copy, cue } from './cues';
  * against both the doodles and the vector work.
  */
 
-export const S6_FRAMES = beatFrames('s6', 2.4);
+export const S6_FRAMES = beatFrames('s6', 2.0);
+/**
+ * Where this scene's narration sits inside it, for film-level ducking.
+ * The scene owns its own layout; Full.tsx should not have to know it.
+ */
+export const BEATS = [{ id: 's6', at: 0 }];
 
 const PX = 22; // one sprite pixel
 const ON = color.mechanism;
